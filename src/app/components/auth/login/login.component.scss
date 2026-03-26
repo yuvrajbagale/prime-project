@@ -1,0 +1,327 @@
+:host {
+  display: block;
+}
+
+/* Form Container Animation */
+.form-container {
+  animation: slideUp 0.6s ease-out;
+}
+
+/* Enhanced Button Styles */
+::ng-deep .p-button {
+  border-radius: 0.75rem;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+::ng-deep .p-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+::ng-deep .p-button:hover::before {
+  left: 100%;
+}
+
+::ng-deep .p-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+::ng-deep .p-button:active {
+  transform: translateY(0);
+}
+
+/* Enhanced Input Styles */
+::ng-deep .p-inputtext,
+.custom-input {
+  border-radius: 0.75rem;
+  border: 2px solid #e5e7eb;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: #f9fafb;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  padding-right: 1rem;
+  font-size: 0.95rem;
+  width: 100%;
+  height: 44px;
+}
+
+::ng-deep .p-inputtext:focus,
+.custom-input:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+  background: white;
+  transform: translateY(-1px);
+  outline: none;
+}
+
+::ng-deep .p-inputtext:hover,
+.custom-input:hover {
+  border-color: #6366f1;
+  background: white;
+}
+
+.custom-input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* Password Input Styles */
+::ng-deep .p-password {
+  width: 100%;
+}
+
+::ng-deep .p-password input {
+  border-radius: 0.75rem;
+  border: 2px solid #e5e7eb;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: #f9fafb;
+  padding: 0.75rem 2.5rem 0.75rem 2.5rem;
+  font-size: 0.95rem;
+  width: 100%;
+  height: 44px;
+}
+
+::ng-deep .p-password input:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+  background: white;
+  transform: translateY(-1px);
+  outline: none;
+}
+
+::ng-deep .p-password input:hover {
+  border-color: #6366f1;
+  background: white;
+}
+
+::ng-deep .p-password .p-password-panel {
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+::ng-deep .p-password .p-icon-field {
+  width: 100%;
+}
+
+::ng-deep .p-password .p-icon-field .p-input-icon {
+  right: 0.75rem;
+  color: #6b7280;
+}
+
+/* Checkbox Styles */
+input[type="checkbox"] {
+  transition: all 0.2s ease;
+}
+
+input[type="checkbox"]:checked {
+  background-color: #6366f1;
+  border-color: #6366f1;
+}
+
+/* Error Message Animation */
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Social Button Styles */
+.social-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  border-radius: 0.75rem;
+  border: 2px solid #e5e7eb;
+  background: white;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-weight: 600;
+  font-size: 0.75rem;
+}
+
+.social-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.social-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.social-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.social-text {
+  color: #374151;
+  font-size: 0.75rem;
+}
+
+/* Google Button */
+.google-btn {
+  border-color: #ea4335;
+  background: white;
+}
+
+.google-btn:hover:not(:disabled) {
+  background: #fef2f2;
+  box-shadow: 0 10px 25px rgba(234, 67, 53, 0.15);
+}
+
+/* Facebook Button */
+.facebook-btn {
+  border-color: #1877f2;
+  background: #1877f2;
+}
+
+.facebook-btn .social-text {
+  color: white;
+}
+
+.facebook-btn:hover:not(:disabled) {
+  background: #166fe5;
+  box-shadow: 0 10px 25px rgba(24, 119, 242, 0.3);
+}
+
+/* Apple Button */
+.apple-btn {
+  border-color: #000000;
+  background: #000000;
+}
+
+.apple-btn .social-icon path {
+  fill: white;
+}
+
+.apple-btn .social-text {
+  color: white;
+}
+
+.apple-btn:hover:not(:disabled) {
+  background: #1a1a1a;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Loading State */
+::ng-deep .p-button.p-button-loading {
+  pointer-events: none;
+}
+
+::ng-deep .p-button.p-button-loading .p-button-label {
+  opacity: 0.7;
+}
+
+/* Gradient Button Enhancement */
+::ng-deep .p-button[class*="bg-gradient"] {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  position: relative;
+}
+
+::ng-deep .p-button[class*="bg-gradient"]:hover {
+  background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+}
+
+/* Focus States */
+::ng-deep .p-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.3);
+}
+
+/* Disabled States */
+::ng-deep .p-button:disabled,
+::ng-deep .p-inputtext:disabled,
+::ng-deep .p-password input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* Link Hover Effects */
+a {
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Animations */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.1;
+  }
+  50% {
+    opacity: 0.2;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+  .form-container {
+    margin: 1rem;
+    padding: 2rem 1.5rem;
+  }
+  
+  ::ng-deep .p-inputtext,
+  ::ng-deep .p-password input {
+    font-size: 0.9rem;
+  }
+}
+
+/* Dark mode support (optional) */
+@media (prefers-color-scheme: dark) {
+  .form-container {
+    background: rgba(31, 41, 55, 0.95);
+    border-color: rgba(75, 85, 99, 0.3);
+  }
+  
+  ::ng-deep .p-inputtext,
+  ::ng-deep .p-password input {
+    background: #374151;
+    border-color: #4b5563;
+    color: white;
+  }
+  
+  ::ng-deep .p-inputtext:focus,
+  ::ng-deep .p-password input:focus {
+    background: #1f2937;
+  }
+}

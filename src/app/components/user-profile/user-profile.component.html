@@ -1,0 +1,300 @@
+<div class="min-h-screen bg-gray-50 p-6">
+  <div class="max-w-4xl mx-auto">
+    <!-- Header -->
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold text-gray-900 mb-2">My Profile</h1>
+      <p class="text-gray-600">Manage your account settings and preferences</p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <!-- Profile Card -->
+      <div class="lg:col-span-1">
+        <p-card class="text-center">
+          <div class="space-y-4">
+            <p-avatar 
+              [image]="currentUser?.avatar" 
+              size="xlarge"
+              shape="circle"
+              class="mx-auto"
+            ></p-avatar>
+            
+            <div>
+              <h2 class="text-xl font-semibold text-gray-900">{{ currentUser?.name }}</h2>
+              <p class="text-gray-600">{{ currentUser?.email }}</p>
+              <p class="text-sm mt-2">
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
+                      [class]="'bg-yellow-100 text-yellow-800'">
+                  <i class="pi pi-star mr-1"></i>
+                  {{ membershipStatus }} Member
+                </span>
+              </p>
+            </div>
+
+            <div class="pt-4 border-t border-gray-200 space-y-3">
+              <div class="flex justify-between text-sm">
+                <span class="text-gray-600">Member Since</span>
+                <span class="font-medium">{{ currentUser ? formatDate(currentUser.joinedDate) : '' }}</span>
+              </div>
+              <div class="flex justify-between text-sm">
+                <span class="text-gray-600">Favorite Songs</span>
+                <span class="font-medium">{{ favoriteSongsCount }}</span>
+              </div>
+              <div class="flex justify-between text-sm">
+                <span class="text-gray-600">Playlists</span>
+                <span class="font-medium">{{ playlistsCount }}</span>
+              </div>
+              <div class="flex justify-between text-sm">
+                <span class="text-gray-600">Following</span>
+                <span class="font-medium">{{ followedArtistsCount }}</span>
+              </div>
+            </div>
+
+            <div class="pt-4 space-y-2">
+              <p-button 
+                label="Edit Profile"
+                icon="pi pi-user-edit"
+                class="w-full"
+                (click)="enableEdit()"
+                [disabled]="isEditing"
+              ></p-button>
+              
+              <p-button 
+                label="Change Password"
+                icon="pi pi-lock"
+                class="w-full p-button-outlined"
+                (click)="enablePasswordChange()"
+                [disabled]="isChangingPassword"
+              ></p-button>
+              
+              <p-button 
+                label="Logout"
+                icon="pi pi-sign-out"
+                class="w-full p-button-danger"
+                (click)="logout()"
+              ></p-button>
+            </div>
+          </div>
+        </p-card>
+      </div>
+
+      <!-- Edit Profile Form -->
+      <div class="lg:col-span-2">
+        <p-card header="Edit Profile" *ngIf="isEditing">
+          <form (ngSubmit)="saveProfile()" class="space-y-6">
+            <div>
+              <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Name</label>
+              <p-inputText 
+                id="name"
+                [(ngModel)]="editForm.name"
+                name="name"
+                placeholder="Enter your name"
+                class="w-full"
+                [disabled]="isSubmitting"
+                required
+              ></p-inputText>
+            </div>
+
+            <div>
+              <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+              <p-inputText 
+                id="email"
+                type="email"
+                [(ngModel)]="editForm.email"
+                name="email"
+                placeholder="Enter your email"
+                class="w-full"
+                [disabled]="isSubmitting"
+                required
+              ></p-inputText>
+            </div>
+
+            <div class="flex space-x-3">
+              <p-button 
+                type="submit"
+                label="Save Changes"
+                icon="pi pi-check"
+                [loading]="isSubmitting"
+                class="flex-1"
+              ></p-button>
+              
+              <p-button 
+                type="button"
+                label="Cancel"
+                icon="pi pi-times"
+                class="p-button-outlined flex-1"
+                (click)="cancelEdit()"
+                [disabled]="isSubmitting"
+              ></p-button>
+            </div>
+          </form>
+        </p-card>
+
+        <!-- Change Password Form -->
+        <p-card header="Change Password" *ngIf="isChangingPassword">
+          <form (ngSubmit)="changePassword()" class="space-y-6">
+            <div>
+              <label for="currentPassword" class="block text-sm font-medium text-gray-700 mb-2">Current Password</label>
+              <p-inputText 
+                id="currentPassword"
+                type="password"
+                [(ngModel)]="currentPassword"
+                name="currentPassword"
+                placeholder="Enter current password"
+                class="w-full"
+                [disabled]="isSubmittingPassword"
+                required
+              ></p-inputText>
+            </div>
+
+            <div>
+              <label for="newPassword" class="block text-sm font-medium text-gray-700 mb-2">New Password</label>
+              <p-inputText 
+                id="newPassword"
+                type="password"
+                [(ngModel)]="newPassword"
+                name="newPassword"
+                placeholder="Enter new password"
+                class="w-full"
+                [disabled]="isSubmittingPassword"
+                required
+              ></p-inputText>
+              <p class="text-xs text-gray-500 mt-1">Password must be at least 6 characters long</p>
+            </div>
+
+            <div>
+              <label for="confirmPassword" class="block text-sm font-medium text-gray-700 mb-2">Confirm New Password</label>
+              <p-inputText 
+                id="confirmPassword"
+                type="password"
+                [(ngModel)]="confirmPassword"
+                name="confirmPassword"
+                placeholder="Confirm new password"
+                class="w-full"
+                [disabled]="isSubmittingPassword"
+                required
+              ></p-inputText>
+            </div>
+
+            <div class="flex space-x-3">
+              <p-button 
+                type="submit"
+                label="Change Password"
+                icon="pi pi-check"
+                [loading]="isSubmittingPassword"
+                class="flex-1"
+              ></p-button>
+              
+              <p-button 
+                type="button"
+                label="Cancel"
+                icon="pi pi-times"
+                class="p-button-outlined flex-1"
+                (click)="cancelPasswordChange()"
+                [disabled]="isSubmittingPassword"
+              ></p-button>
+            </div>
+          </form>
+        </p-card>
+
+        <!-- Account Overview -->
+        <p-card header="Account Overview" *ngIf="!isEditing && !isChangingPassword">
+          <div class="space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Quick Stats</h3>
+                <div class="space-y-3">
+                  <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                    <div class="flex items-center space-x-3">
+                      <i class="pi pi-heart text-red-500"></i>
+                      <span class="text-sm font-medium">Favorite Songs</span>
+                    </div>
+                    <span class="text-lg font-bold text-gray-900">{{ favoriteSongsCount }}</span>
+                  </div>
+                  
+                  <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                    <div class="flex items-center space-x-3">
+                      <i class="pi pi-list text-blue-500"></i>
+                      <span class="text-sm font-medium">Playlists</span>
+                    </div>
+                    <span class="text-lg font-bold text-gray-900">{{ playlistsCount }}</span>
+                  </div>
+                  
+                  <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                    <div class="flex items-center space-x-3">
+                      <i class="pi pi-user-plus text-green-500"></i>
+                      <span class="text-sm font-medium">Following</span>
+                    </div>
+                    <span class="text-lg font-bold text-gray-900">{{ followedArtistsCount }}</span>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Membership</h3>
+                <div class="p-4 bg-gradient-to-r from-yellow-50 to-orange-50 rounded-lg border border-yellow-200">
+                  <div class="flex items-center justify-between mb-3">
+                    <span class="text-sm font-medium text-gray-700">Current Plan</span>
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                      {{ membershipStatus }}
+                    </span>
+                  </div>
+                  
+                  <div *ngIf="!currentUser?.premium" class="space-y-3">
+                    <p class="text-sm text-gray-600">Upgrade to Premium for unlimited skips, offline downloads, and ad-free listening.</p>
+                    <p-button 
+                      label="Upgrade to Premium"
+                      icon="pi pi-crown"
+                      class="w-full"
+                      size="small"
+                    ></p-button>
+                  </div>
+                  
+                  <div *ngIf="currentUser?.premium" class="space-y-3">
+                    <p class="text-sm text-gray-600">Enjoying all Premium benefits!</p>
+                    <div class="text-xs text-gray-500 space-y-1">
+                      <p>✓ Unlimited skips</p>
+                      <p>✓ Offline downloads</p>
+                      <p>✓ Ad-free listening</p>
+                      <p>✓ High quality audio</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h3 class="text-lg font-medium text-gray-900 mb-4">Recent Activity</h3>
+              <div class="space-y-3">
+                <div class="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
+                  <i class="pi pi-history text-gray-400"></i>
+                  <div class="flex-1">
+                    <p class="text-sm font-medium text-gray-900">Profile updated</p>
+                    <p class="text-xs text-gray-500">2 days ago</p>
+                  </div>
+                </div>
+                
+                <div class="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
+                  <i class="pi pi-plus text-gray-400"></i>
+                  <div class="flex-1">
+                    <p class="text-sm font-medium text-gray-900">Created new playlist</p>
+                    <p class="text-xs text-gray-500">1 week ago</p>
+                  </div>
+                </div>
+                
+                <div class="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
+                  <i class="pi pi-heart text-gray-400"></i>
+                  <div class="flex-1">
+                    <p class="text-sm font-medium text-gray-900">Liked 10 songs</p>
+                    <p class="text-xs text-gray-500">2 weeks ago</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </p-card>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p-toast></p-toast>

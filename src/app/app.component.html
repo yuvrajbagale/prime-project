@@ -1,22 +1,50 @@
 <div class="min-h-screen bg-gray-50">
-  <!-- Navbar -->
-  <app-navbar></app-navbar>
+  <!-- Login Screen -->
+  <app-login *ngIf="showLogin" (loginSuccess)="onLoginSuccess()"></app-login>
 
-  <!-- Sidebar - Fixed Position -->
-  <app-sidebar 
-    class="fixed left-0 z-40"
-    style="top: 64px; height: calc(100vh - 64px);"
-    [style.width.px]="sidebarCollapsed ? 64 : 256">
-  </app-sidebar>
-  
-  <!-- Main Content - With left margin for sidebar -->
-  <main 
-    class="overflow-y-auto"
-    style="height: calc(100vh - 64px); margin-top: 64px;"
-    [style.margin-left.px]="sidebarCollapsed ? 64 : 256">
-    <app-main-screen></app-main-screen>
-  </main>
+  <!-- User Profile -->
+  <app-user-profile *ngIf="showProfile" (back)="hideUserProfile()"></app-user-profile>
 
-  <!-- Music Player -->
-  <app-music-player></app-music-player>
+  <!-- Main App (shown when authenticated) -->
+  <div *ngIf="isAuthenticated && !showLogin && !showProfile">
+    <!-- Navbar -->
+    <app-navbar 
+      [currentUser]="currentUser"
+      (logout)="logout()"
+      (showProfile)="showUserProfile()">
+    </app-navbar>
+
+    <!-- Sidebar - Fixed Position -->
+    <app-sidebar 
+      class="fixed left-0 z-40"
+      style="top: 64px; height: calc(100vh - 64px);"
+      [style.width.px]="sidebarCollapsed ? 64 : 256">
+    </app-sidebar>
+    
+    <!-- Main Content - With left margin for sidebar -->
+    <main 
+      class="overflow-y-auto"
+      style="height: calc(100vh - 64px); padding-bottom: 80px;"
+      [style.margin-left.px]="sidebarCollapsed ? 64 : 256">
+      <app-main-screen (songSelected)="onSongSelected($event)"></app-main-screen>
+    </main>
+
+    <!-- Music Player -->
+    <app-music-player
+      [currentSong]="currentSong"
+      [isPlaying]="isPlaying"
+      [currentTime]="currentTime"
+      [duration]="duration"
+      [volume]="volume"
+      (playPause)="playPause()"
+      (previous)="playPrevious()"
+      (next)="playNext()"
+      (seek)="seek($event)"
+      (volumeChange)="onVolumeChange($event)"
+      (shuffle)="shuffle()"
+      (repeat)="repeat()"
+      (like)="like()"
+      (queue)="toggleQueue()">
+    </app-music-player>
+  </div>
 </div>

@@ -24,6 +24,8 @@ export class MusicPlayerComponent {
   @Output() volumeChange = new EventEmitter<number>();
   @Output() shuffle = new EventEmitter<void>();
   @Output() repeat = new EventEmitter<void>();
+  @Output() like = new EventEmitter<void>();
+  @Output() queue = new EventEmitter<void>();
 
   isShuffled: boolean = false;
   repeatMode: 'none' | 'one' | 'all' = 'none';
@@ -79,5 +81,13 @@ export class MusicPlayerComponent {
       default:
         return 'pi pi-refresh';
     }
+  }
+
+  likeSong() {
+    this.like.emit();
+  }
+
+  toggleQueue() {
+    this.queue.emit();
   }
 }
