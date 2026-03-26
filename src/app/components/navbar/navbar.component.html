@@ -1,0 +1,51 @@
+<nav class="bg-white shadow-md border-b border-gray-200 fixed top-0 left-0 right-0 z-50">
+  <div class="px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16">
+      <!-- Left side - Logo and menu toggle -->
+      <div class="flex items-center">
+        <button 
+          (click)="toggleSidebar()"
+          class="p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 lg:hidden"
+        >
+          <i class="pi pi-bars text-xl"></i>
+        </button>
+        <div class="flex-shrink-0 flex items-center ml-4 lg:ml-0">
+          <i class="pi pi-briefcase text-blue-600 text-2xl mr-3"></i>
+          <span class="text-xl font-bold text-gray-900">MyApp</span>
+        </div>
+      </div>
+
+      <!-- Center - Navigation menu (hidden on mobile) -->
+      <div class="hidden lg:block">
+        <div class="flex items-center space-x-4">
+          <a 
+            *ngFor="let item of items" 
+            [routerLink]="item.routerLink" 
+            class="flex items-center px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 transition-colors duration-200"
+          >
+            <i [class]="item.icon" class="mr-2"></i>
+            {{ item.label }}
+          </a>
+        </div>
+      </div>
+
+      <!-- Right side - User actions -->
+      <div class="flex items-center space-x-3">
+        <button 
+          pButton 
+          pRipple 
+          class="p-button-outlined p-button-sm"
+          icon="pi pi-bell"
+          (click)="showNotifications()"
+        ></button>
+        <button 
+          pButton 
+          pRipple 
+          class="p-button-outlined p-button-sm"
+          icon="pi pi-user"
+          (click)="showUserProfile()"
+        ></button>
+      </div>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,31 @@
+:host {
+  display: block;
+}
+
+nav {
+  height: 4rem; /* 64px - fixed navbar height */
+}
+
+.p-menubar {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.p-menubar .p-menuitem-link {
+  color: #4b5563 !important;
+  font-weight: 500 !important;
+  padding: 0.5rem 1rem !important;
+  border-radius: 0.375rem !important;
+  transition: all 0.2s ease !important;
+}
+
+.p-menubar .p-menuitem-link:hover {
+  background-color: #f3f4f6 !important;
+  color: #111827 !important;
+}
+
+.p-menubar .p-menuitem-link.p-highlight {
+  background-color: #dbeafe !important;
+  color: #1d4ed8 !important;
+}

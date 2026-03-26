@@ -1,0 +1,122 @@
+<main class="bg-gray-50 h-full" [style.margin-left]="isSidebarCollapsed ? '4rem' : '16rem'" [style.width]="isSidebarCollapsed ? 'calc(100% - 4rem)' : 'calc(100% - 16rem)'">
+  <!-- Page Header -->
+  <div class="bg-white shadow-sm border-b border-gray-200">
+    <div class="px-6 py-4">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <h1 class="text-2xl font-bold text-gray-900">Dashboard</h1>
+          <p class="text-sm text-gray-600 mt-1">Welcome back! Here's what's happening with your business today.</p>
+        </div>
+        <div class="mt-4 sm:mt-0 flex space-x-3">
+          <div class="relative">
+            <input 
+              pInputText 
+              type="text" 
+              [(ngModel)]="searchValue"
+              placeholder="Search..." 
+              class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            />
+            <i class="pi pi-search absolute left-3 top-3 text-gray-400"></i>
+          </div>
+          <button 
+            pButton 
+            pRipple 
+            label="Add New" 
+            icon="pi pi-plus"
+            class="p-button-primary"
+          ></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="p-6">
+    <!-- Stats Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <div *ngFor="let stat of stats" 
+           class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-sm font-medium text-gray-600">{{ stat.title }}</p>
+            <p class="text-2xl font-bold text-gray-900 mt-2">{{ stat.value }}</p>
+            <p class="text-sm text-green-600 mt-2">{{ stat.change }}</p>
+          </div>
+          <div class="bg-blue-100 rounded-full p-3" *ngIf="stat.color === 'blue'">
+            <i [class]="stat.icon" class="text-blue-600 text-xl"></i>
+          </div>
+          <div class="bg-green-100 rounded-full p-3" *ngIf="stat.color === 'green'">
+            <i [class]="stat.icon" class="text-green-600 text-xl"></i>
+          </div>
+          <div class="bg-orange-100 rounded-full p-3" *ngIf="stat.color === 'orange'">
+            <i [class]="stat.icon" class="text-orange-600 text-xl"></i>
+          </div>
+          <div class="bg-purple-100 rounded-full p-3" *ngIf="stat.color === 'purple'">
+            <i [class]="stat.icon" class="text-purple-600 text-xl"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Charts and Tables -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+      <!-- Recent Activities -->
+      <div class="lg:col-span-3">
+        <p-card header="Recent Activities" class="h-full">
+          <div class="space-y-4 max-h-80 overflow-y-auto">
+            <div *ngFor="let activity of recentActivities" 
+                 class="flex items-start space-x-3 p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200">
+              <div class="flex-shrink-0">
+                <div [class]="activity.status === 'success' ? 'bg-green-100' : activity.status === 'warning' ? 'bg-orange-100' : 'bg-blue-100'" 
+                     class="rounded-full p-2">
+                  <i [class]="activity.status === 'success' ? 'pi pi-check text-green-600' : activity.status === 'warning' ? 'pi pi-exclamation-triangle text-orange-600' : 'pi pi-info text-blue-600'" 
+                     class="text-sm"></i>
+                </div>
+              </div>
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-medium text-gray-900">{{ activity.user }}</p>
+                <p class="text-sm text-gray-600">{{ activity.action }}</p>
+                <p class="text-xs text-gray-500 mt-1">{{ activity.time }}</p>
+              </div>
+            </div>
+          </div>
+        </p-card>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+      <h2 class="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <button 
+          pButton 
+          pRipple 
+          label="Create Order" 
+          icon="pi pi-plus-circle"
+          class="p-button-outlined w-full justify-center"
+        ></button>
+        <button 
+          pButton 
+          pRipple 
+          label="Add User" 
+          icon="pi pi-user-plus"
+          class="p-button-outlined w-full justify-center"
+        ></button>
+        <button 
+          pButton 
+          pRipple 
+          label="Generate Report" 
+          icon="pi pi-file-pdf"
+          class="p-button-outlined w-full justify-center"
+        ></button>
+        <button 
+          pButton 
+          pRipple 
+          label="Settings" 
+          icon="pi pi-cog"
+          class="p-button-outlined w-full justify-center"
+        ></button>
+      </div>
+    </div>
+  </div>
+</main>

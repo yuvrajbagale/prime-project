@@ -1,0 +1,79 @@
+:host {
+  display: block;
+  transition: all 0.3s ease-in-out; /* Smooth transition when sidebar toggles */
+}
+
+main {
+  overflow: hidden; /* Remove all scrollbars */
+  transition: all 0.3s ease-in-out; /* Smooth transition when sidebar toggles */
+  padding-top: 3rem; /* Account for fixed navbar */
+}
+
+/* Adjust for mobile */
+@media (max-width: 1024px) {
+  :host {
+    margin-left: 0 !important; /* No margin on mobile since sidebar is overlay */
+    width: 100% !important; /* Full width on mobile */
+  }
+  
+  main {
+    padding-top: 4rem; /* Keep navbar spacing on mobile */
+  }
+}
+
+/* Hide scrollbars for main content */
+main::-webkit-scrollbar {
+  display: none;
+}
+
+main {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.p-card {
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  border: 1px solid #e5e7eb;
+}
+
+.p-card .p-card-header {
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 1rem 1.5rem;
+}
+
+.p-card .p-card-content {
+  padding: 1.5rem;
+}
+
+.bg-blue-100 {
+  background-color: #dbeafe;
+}
+
+.text-blue-600 {
+  color: #2563eb;
+}
+
+.bg-green-100 {
+  background-color: #d1fae5;
+}
+
+.text-green-600 {
+  color: #059669;
+}
+
+.bg-orange-100 {
+  background-color: #fed7aa;
+}
+
+.text-orange-600 {
+  color: #ea580c;
+}
+
+.bg-purple-100 {
+  background-color: #e9d5ff;
+}
+
+.text-purple-600 {
+  color: #9333ea;
+}

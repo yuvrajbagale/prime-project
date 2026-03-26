@@ -1,0 +1,39 @@
+:host {
+  display: block;
+}
+
+aside {
+  position: fixed;
+  top: 4rem; /* Match navbar height */
+  left: 0;
+  z-index: 40;
+  box-shadow: 4px 0 6px -1px rgba(0, 0, 0, 0.1), 2px 0 4px -1px rgba(0, 0, 0, 0.06);
+  height: calc(100vh - 4rem); /* Full viewport height minus navbar */
+  overflow: hidden; /* Completely hide all scrollbars */
+  transition: width 0.3s ease-in-out; /* Add width transition */
+}
+
+/* Hide all scrollbars completely */
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* Firefox scrollbar hiding */
+* {
+  scrollbar-width: none;
+}
+
+/* IE and Edge scrollbar hiding */
+* {
+  -ms-overflow-style: none;
+}
+
+@media (max-width: 1024px) {
+  aside {
+    transform: translateX(-100%);
+  }
+  
+  aside.mobile-open {
+    transform: translateX(0);
+  }
+}
