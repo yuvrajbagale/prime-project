@@ -16,47 +16,67 @@ export class SidebarComponent {
   
   menuItems = [
     {
-      label: 'Dashboard',
-      icon: 'pi pi-home',
-      routerLink: '/dashboard',
-      badge: '5'
+      label: 'Trending Songs',
+      icon: 'pi pi-fire',
+      routerLink: '/trending',
+      badge: 'New'
     },
     {
-      label: 'Analytics',
-      icon: 'pi pi-chart-bar',
-      routerLink: '/analytics',
+      label: 'New Songs',
+      icon: 'pi pi-plus-circle',
+      routerLink: '/new-songs',
       badge: null
     },
     {
-      label: 'Users',
-      icon: 'pi pi-users',
-      routerLink: '/users',
-      badge: '12'
-    },
-    {
-      label: 'Products',
-      icon: 'pi pi-box',
-      routerLink: '/products',
+      label: 'Old Songs',
+      icon: 'pi pi-clock',
+      routerLink: '/old-songs',
       badge: null
     },
     {
-      label: 'Orders',
-      icon: 'pi pi-shopping-cart',
-      routerLink: '/orders',
-      badge: '3'
+      label: 'Album',
+      icon: 'pi pi-disc',
+      routerLink: '/albums',
+      badge: null
     },
     {
-      label: 'Settings',
-      icon: 'pi pi-cog',
-      routerLink: '/settings',
+      label: 'Radio',
+      icon: 'pi pi-broadcast',
+      routerLink: '/radio',
+      badge: null
+    },
+    {
+      label: 'My Music',
+      icon: 'pi pi-heart',
+      routerLink: '/my-music',
+      badge: null
+    },
+    {
+      label: 'Liked Songs',
+      icon: 'pi pi-heart-fill',
+      routerLink: '/liked-songs',
+      badge: null
+    },
+    {
+      label: 'History',
+      icon: 'pi pi-history',
+      routerLink: '/history',
       badge: null
     }
+  ];
+
+  musicCategories = [
+    { name: 'Shades of Love', color: '#EC4899', routerLink: '/category/shades-of-love' },
+    { name: 'Party', color: '#8B5CF6', routerLink: '/category/party' },
+    { name: 'Romance', color: '#F59E0B', routerLink: '/category/romance' },
+    { name: '90s & 2000s', color: '#10B981', routerLink: '/category/90s-2000s' },
+    { name: 'Bhakti', color: '#F97316', routerLink: '/category/bhakti' },
+    { name: 'Indie', color: '#6366F1', routerLink: '/category/indie' }
   ];
 
   toggleSidebar() {
     this.isCollapsed = !this.isCollapsed;
     console.log('Sidebar toggled, isCollapsed:', this.isCollapsed);
-    // Emit event to notify main screen
     const event = new CustomEvent('sidebar-collapsed', { 
       detail: { isCollapsed: this.isCollapsed } 
     });
@@ -64,7 +84,6 @@ export class SidebarComponent {
   }
 
   isActive(route: string): boolean {
-    // Simple active state check - you can enhance this with router
     return false;
   }
 }

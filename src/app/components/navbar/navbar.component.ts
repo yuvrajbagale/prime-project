@@ -2,12 +2,11 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { Router } from '@angular/router';
-import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule, ButtonModule, RouterLink],
+  imports: [CommonModule, ButtonModule],
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
 })
@@ -19,21 +18,20 @@ export class NavbarComponent {
       routerLink: '/'
     },
     {
-      label: 'Dashboard',
-      icon: 'pi pi-chart-bar',
-      routerLink: '/dashboard'
+      label: 'Browse',
+      icon: 'pi pi-compass',
+      routerLink: '/browse'
     },
     {
-      label: 'Settings',
-      icon: 'pi pi-cog',
-      routerLink: '/settings'
+      label: 'Library',
+      icon: 'pi pi-book',
+      routerLink: '/library'
     }
   ];
 
   constructor(private router: Router) {}
 
   toggleSidebar() {
-    // Emit event to parent to toggle sidebar
     const event = new CustomEvent('toggle-sidebar');
     window.dispatchEvent(event);
   }
@@ -44,5 +42,9 @@ export class NavbarComponent {
 
   showUserProfile() {
     console.log('Show user profile');
+  }
+
+  upgradeToPro() {
+    console.log('Upgrade to Pro clicked');
   }
 }

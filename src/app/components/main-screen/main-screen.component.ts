@@ -17,22 +17,44 @@ export class MainScreenComponent {
   searchValue = '';
   isSidebarCollapsed = false;
   
-  stats = [
-    { title: 'Total Users', value: '1,234', change: '+12%', icon: 'pi pi-users', color: 'blue' },
-    { title: 'Revenue', value: '$45,678', change: '+8%', icon: 'pi pi-dollar', color: 'green' },
-    { title: 'Orders', value: '567', change: '+23%', icon: 'pi pi-shopping-cart', color: 'orange' },
-    { title: 'Performance', value: '89%', change: '+5%', icon: 'pi pi-chart-line', color: 'purple' }
+  trendingSongs = [
+    { id: 1, title: 'Shape of You', artist: 'Ed Sheeran' },
+    { id: 2, title: 'Blinding Lights', artist: 'The Weeknd' },
+    { id: 3, title: 'Dance Monkey', artist: 'Tones and I' },
+    { id: 4, title: 'Someone Like You', artist: 'Adele' },
+    { id: 5, title: 'Starboy', artist: 'The Weeknd' },
+    { id: 6, title: 'Perfect', artist: 'Ed Sheeran' }
   ];
 
-  recentActivities = [
-    { id: 1, user: 'John Doe', action: 'Created new order', time: '2 minutes ago', status: 'success' },
-    { id: 2, user: 'Jane Smith', action: 'Updated profile', time: '15 minutes ago', status: 'info' },
-    { id: 3, user: 'Bob Johnson', action: 'Deleted product', time: '1 hour ago', status: 'warning' },
-    { id: 4, user: 'Alice Brown', action: 'Added new user', time: '2 hours ago', status: 'success' }
+  popularPlaylists = [
+    { id: 1, name: 'Top 50 Bollywood', songCount: 50 },
+    { id: 2, name: 'Romantic Hits', songCount: 25 },
+    { id: 3, name: 'Workout Mix', songCount: 30 },
+    { id: 4, name: 'Chill Vibes', songCount: 40 },
+    { id: 5, name: 'Party Anthems', songCount: 35 }
+  ];
+
+  recommendedAlbums = [
+    { id: 1, name: 'Divide', artist: 'Ed Sheeran' },
+    { id: 2, name: 'After Hours', artist: 'The Weeknd' },
+    { id: 3, name: '25', artist: 'Adele' },
+    { id: 4, name: 'Fine Line', artist: 'Harry Styles' },
+    { id: 5, name: 'Future Nostalgia', artist: 'Dua Lipa' },
+    { id: 6, name: 'Positions', artist: 'Ariana Grande' }
+  ];
+
+  popularArtists = [
+    { id: 1, name: 'Arijit Singh' },
+    { id: 2, name: 'Neha Kakkar' },
+    { id: 3, name: 'Badshah' },
+    { id: 4, name: 'Shreya Ghoshal' },
+    { id: 5, name: 'Honey Singh' },
+    { id: 6, name: 'Sunidhi Chauhan' },
+    { id: 7, name: 'Udit Narayan' },
+    { id: 8, name: 'Alka Yagnik' }
   ];
 
   ngOnInit() {
-    // Listen for sidebar collapse events
     window.addEventListener('sidebar-collapsed', this.handleSidebarCollapse.bind(this));
   }
 

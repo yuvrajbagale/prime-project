@@ -1,0 +1,251 @@
+<div class="min-h-screen bg-gray-900 text-white p-6">
+  <!-- Search Header -->
+  <div class="max-w-6xl mx-auto mb-8">
+    <div class="relative max-w-2xl mx-auto">
+      <input 
+        type="text" 
+        [(ngModel)]="searchQuery"
+        (input)="onSearch()"
+        placeholder="Search for songs, artists, albums, playlists..."
+        class="w-full bg-gray-800 text-white px-6 py-4 pl-12 pr-4 rounded-full border border-gray-700 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500 text-lg"
+        autofocus
+      />
+      <i class="pi pi-search absolute left-4 top-5 text-gray-400 text-xl"></i>
+      <button 
+        *ngIf="searchQuery"
+        (click)="searchQuery = ''; clearResults()"
+        class="absolute right-4 top-4 text-gray-400 hover:text-white"
+      >
+        <i class="pi pi-times text-xl"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Search Results -->
+  <div class="max-w-6xl mx-auto" *ngIf="searchQuery">
+    <!-- Tabs -->
+    <div class="flex space-x-6 mb-8 border-b border-gray-700">
+      <button 
+        *ngFor="let tab of ['all', 'songs', 'artists', 'albums', 'playlists']"
+        (click)="switchTab(tab as any)"
+        [class]="activeTab === tab ? 'text-blue-500 border-b-2 border-blue-500' : 'text-gray-400 hover:text-white'"
+        class="pb-3 px-1 capitalize transition-colors"
+      >
+        {{ tab }} 
+        <span *ngIf="tab === 'all' && searchResults.all.length > 0" class="ml-2 text-sm">({{ searchResults.all.length }})</span>
+        <span *ngIf="tab === 'songs' && searchResults.songs.length > 0" class="ml-2 text-sm">({{ searchResults.songs.length }})</span>
+        <span *ngIf="tab === 'artists' && searchResults.artists.length > 0" class="ml-2 text-sm">({{ searchResults.artists.length }})</span>
+        <span *ngIf="tab === 'albums' && searchResults.albums.length > 0" class="ml-2 text-sm">({{ searchResults.albums.length }})</span>
+        <span *ngIf="tab === 'playlists' && searchResults.playlists.length > 0" class="ml-2 text-sm">({{ searchResults.playlists.length }})</span>
+      </button>
+    </div>
+
+    <!-- Results Content -->
+    <div class="space-y-6">
+      <!-- All Results -->
+      <div *ngIf="activeTab === 'all'">
+        <div *ngIf="searchResults.all.length === 0" class="text-center py-12 text-gray-400">
+          <i class="pi pi-search text-6xl mb-4"></i>
+          <p class="text-xl">No results found for "{{ searchQuery }}"</p>
+        </div>
+        
+        <div *ngIf="searchResults.all.length > 0" class="space-y-4">
+          <div *ngFor="let result of searchResults.all" class="bg-gray-800 rounded-lg p-4 hover:bg-gray-700 transition-colors group">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center space-x-4">
+                <!-- Song -->
+                <div *ngIf="result.type === 'song'" class="flex items-center space-x-4">
+                  <div class="w-12 h-12 bg-gray-700 rounded flex items-center justify-center">
+                    <i class="pi pi-music text-gray-400"></i>
+                  </div>
+                  <div>
+                    <p class="font-medium">{{ result.title }}</p>
+                    <p class="text-sm text-gray-400">{{ result.artist }} • {{ result.album }}</p>
+                  </div>
+                </div>
+                
+                <!-- Artist -->
+                <div *ngIf="result.type === 'artist'" class="flex items-center space-x-4">
+                  <div class="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center">
+                    <i class="pi pi-user text-gray-400"></i>
+                  </div>
+                  <div>
+                    <p class="font-medium">{{ result.name }}</p>
+                    <p class="text-sm text-gray-400">{{ result.followers }} followers</p>
+                  </div>
+                </div>
+                
+                <!-- Album -->
+                <div *ngIf="result.type === 'album'" class="flex items-center space-x-4">
+                  <div class="w-12 h-12 bg-gray-700 rounded flex items-center justify-center">
+                    <i class="pi pi-disc text-gray-400"></i>
+                  </div>
+                  <div>
+                    <p class="font-medium">{{ result.name }}</p>
+                    <p class="text-sm text-gray-400">{{ result.artist }} • {{ result.year }} • {{ result.songs }} songs</p>
+                  </div>
+                </div>
+                
+                <!-- Playlist -->
+                <div *ngIf="result.type === 'playlist'" class="flex items-center space-x-4">
+                  <div class="w-12 h-12 bg-gray-700 rounded flex items-center justify-center">
+                    <i class="pi pi-list text-gray-400"></i>
+                  </div>
+                  <div>
+                    <p class="font-medium">{{ result.name }}</p>
+                    <p class="text-sm text-gray-400">{{ result.songs }} songs • {{ result.likes }} likes</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="flex items-center space-x-2">
+                <button 
+                  pButton 
+                  pRipple 
+                  class="p-button-rounded p-button-text opacity-0 group-hover:opacity-100"
+                  icon="pi pi-play"
+                  (click)="playSong(result)"
+                ></button>
+                <button 
+                  pButton 
+                  pRipple 
+                  class="p-button-rounded p-button-text opacity-0 group-hover:opacity-100"
+                  icon="pi pi-heart"
+                ></button>
+                <button 
+                  pButton 
+                  pRipple 
+                  class="p-button-rounded p-button-text opacity-0 group-hover:opacity-100"
+                  icon="pi pi-ellipsis-h"
+                ></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Songs Only -->
+      <div *ngIf="activeTab === 'songs'">
+        <div *ngIf="searchResults.songs.length === 0" class="text-center py-12 text-gray-400">
+          <i class="pi pi-music text-6xl mb-4"></i>
+          <p class="text-xl">No songs found for "{{ searchQuery }}"</p>
+        </div>
+        
+        <div *ngIf="searchResults.songs.length > 0" class="space-y-2">
+          <div *ngFor="let song of searchResults.songs" class="bg-gray-800 rounded-lg p-3 hover:bg-gray-700 transition-colors group">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center space-x-4">
+                <div class="w-10 h-10 bg-gray-700 rounded flex items-center justify-center">
+                  <i class="pi pi-music text-gray-400"></i>
+                </div>
+                <div>
+                  <p class="font-medium">{{ song.title }}</p>
+                  <p class="text-sm text-gray-400">{{ song.artist }} • {{ song.album }}</p>
+                </div>
+              </div>
+              <div class="flex items-center space-x-3">
+                <span class="text-sm text-gray-400">{{ song.duration }}</span>
+                <button 
+                  pButton 
+                  pRipple 
+                  class="p-button-rounded p-button-text opacity-0 group-hover:opacity-100"
+                  icon="pi pi-play"
+                  (click)="playSong(song)"
+                ></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Artists Only -->
+      <div *ngIf="activeTab === 'artists'">
+        <div *ngIf="searchResults.artists.length === 0" class="text-center py-12 text-gray-400">
+          <i class="pi pi-user text-6xl mb-4"></i>
+          <p class="text-xl">No artists found for "{{ searchQuery }}"</p>
+        </div>
+        
+        <div *ngIf="searchResults.artists.length > 0" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+          <div *ngFor="let artist of searchResults.artists" class="text-center cursor-pointer group">
+            <div class="relative mb-3">
+              <div class="w-24 h-24 mx-auto bg-gray-700 rounded-full flex items-center justify-center">
+                <i class="pi pi-user text-3xl text-gray-400"></i>
+              </div>
+              <button 
+                pButton 
+                pRipple 
+                class="absolute bottom-0 right-1/3 bg-blue-500 hover:bg-blue-600 rounded-full w-8 h-8 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                icon="pi pi-play text-white text-xs"
+              ></button>
+            </div>
+            <p class="font-medium truncate">{{ artist.name }}</p>
+            <p class="text-sm text-gray-400">{{ artist.followers }} followers</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Albums Only -->
+      <div *ngIf="activeTab === 'albums'">
+        <div *ngIf="searchResults.albums.length === 0" class="text-center py-12 text-gray-400">
+          <i class="pi pi-disc text-6xl mb-4"></i>
+          <p class="text-xl">No albums found for "{{ searchQuery }}"</p>
+        </div>
+        
+        <div *ngIf="searchResults.albums.length > 0" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+          <div *ngFor="let album of searchResults.albums" class="cursor-pointer group">
+            <div class="relative mb-3">
+              <div class="w-full aspect-square bg-gray-700 rounded flex items-center justify-center">
+                <i class="pi pi-disc text-3xl text-gray-400"></i>
+              </div>
+              <button 
+                pButton 
+                pRipple 
+                class="absolute bottom-2 right-2 bg-green-500 hover:bg-green-600 rounded-full w-10 h-10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                icon="pi pi-play text-white text-sm"
+                (click)="playAlbum(album)"
+              ></button>
+            </div>
+            <p class="font-medium text-sm truncate">{{ album.name }}</p>
+            <p class="text-xs text-gray-400 truncate">{{ album.artist }} • {{ album.year }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Playlists Only -->
+      <div *ngIf="activeTab === 'playlists'">
+        <div *ngIf="searchResults.playlists.length === 0" class="text-center py-12 text-gray-400">
+          <i class="pi pi-list text-6xl mb-4"></i>
+          <p class="text-xl">No playlists found for "{{ searchQuery }}"</p>
+        </div>
+        
+        <div *ngIf="searchResults.playlists.length > 0" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+          <div *ngFor="let playlist of searchResults.playlists" class="cursor-pointer group">
+            <div class="relative mb-3">
+              <div class="w-full aspect-square bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
+                <i class="pi pi-list text-4xl text-white"></i>
+              </div>
+              <button 
+                pButton 
+                pRipple 
+                class="absolute bottom-2 right-2 bg-green-500 hover:bg-green-600 rounded-full w-10 h-10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                icon="pi pi-play text-white text-sm"
+                (click)="playPlaylist(playlist)"
+              ></button>
+            </div>
+            <p class="font-medium truncate">{{ playlist.name }}</p>
+            <p class="text-sm text-gray-400">{{ playlist.songs }} songs • {{ playlist.likes }} likes</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Initial State (No Search) -->
+  <div *ngIf="!searchQuery" class="max-w-6xl mx-auto">
+    <div class="text-center py-16">
+      <i class="pi pi-search text-6xl text-gray-600 mb-4"></i>
+      <h2 class="text-2xl font-bold mb-2">Search for your favorite music</h2>
+      <p class="text-gray-400">Find songs, artists, albums, and playlists</p>
+    </div>
+  </div>
+</div>

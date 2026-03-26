@@ -1,0 +1,227 @@
+<div class="min-h-screen bg-gray-900 text-white p-6">
+  <div class="max-w-7xl mx-auto">
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-8">
+      <h1 class="text-3xl font-bold">My Playlists</h1>
+      <button 
+        pButton 
+        pRipple 
+        label="Create Playlist" 
+        icon="pi pi-plus"
+        class="p-button-primary"
+        (click)="openCreateModal()"
+      ></button>
+    </div>
+
+    <!-- Playlists Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+      <div *ngFor="let playlist of playlists" 
+           class="bg-gray-800 rounded-lg overflow-hidden hover:bg-gray-700 transition-colors cursor-pointer group">
+        <!-- Playlist Header -->
+        <div class="relative">
+          <div class="h-48 bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+            <i class="pi pi-list text-6xl text-white opacity-50"></i>
+          </div>
+          <button 
+            pButton 
+            pRipple 
+            class="absolute bottom-4 right-4 bg-green-500 hover:bg-green-600 rounded-full w-12 h-12 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+            icon="pi pi-play text-white"
+            (click)="playPlaylist(playlist); $event.stopPropagation()"
+          ></button>
+          <div class="absolute top-4 right-4 flex space-x-2">
+            <button 
+              pButton 
+              pRipple 
+              class="p-button-rounded p-button-text text-white opacity-0 group-hover:opacity-100"
+              icon="pi pi-ellipsis-h"
+              (click)="$event.stopPropagation()"
+            ></button>
+          </div>
+        </div>
+
+        <!-- Playlist Info -->
+        <div class="p-4">
+          <div class="flex justify-between items-start mb-2">
+            <h3 class="text-lg font-semibold truncate">{{ playlist.name }}</h3>
+            <span class="text-xs text-gray-400">
+              <i class="pi" [class]="playlist.isPublic ? 'pi-globe' : 'pi-lock'"></i>
+            </span>
+          </div>
+          <p class="text-sm text-gray-400 mb-3">{{ playlist.description }}</p>
+          <div class="flex justify-between items-center text-sm text-gray-400">
+            <span>{{ playlist.songCount }} songs</span>
+            <span>{{ playlist.duration }}</span>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="px-4 pb-4 flex space-x-2">
+          <button 
+            pButton 
+            pRipple 
+            class="p-button-outlined p-button-sm flex-1"
+            label="View"
+            (click)="selectPlaylist(playlist)"
+          ></button>
+          <button 
+            pButton 
+            pRipple 
+            class="p-button-text p-button-sm p-button-danger"
+            icon="pi pi-trash"
+            (click)="deletePlaylist(playlist.id)"
+          ></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Selected Playlist Details -->
+    <div *ngIf="selectedPlaylist" class="bg-gray-800 rounded-lg p-6">
+      <div class="flex justify-between items-center mb-6">
+        <div>
+          <h2 class="text-2xl font-bold mb-2">{{ selectedPlaylist.name }}</h2>
+          <p class="text-gray-400">{{ selectedPlaylist.description }}</p>
+        </div>
+        <div class="flex space-x-3">
+          <button 
+            pButton 
+            pRipple 
+            class="p-button-outlined"
+            label="Make Public"
+            *ngIf="!selectedPlaylist.isPublic"
+            (click)="togglePlaylistVisibility(selectedPlaylist.id)"
+          ></button>
+          <button 
+            pButton 
+            pRipple 
+            class="p-button-outlined"
+            label="Make Private"
+            *ngIf="selectedPlaylist.isPublic"
+            (click)="togglePlaylistVisibility(selectedPlaylist.id)"
+          ></button>
+          <button 
+            pButton 
+            pRipple 
+            class="p-button-primary"
+            label="Play All"
+            icon="pi pi-play"
+            (click)="playPlaylist(selectedPlaylist)"
+          ></button>
+        </div>
+      </div>
+
+      <!-- Songs List -->
+      <div class="space-y-2">
+        <div *ngFor="let song of selectedPlaylist.songs; let i = index" 
+             class="flex items-center justify-between p-3 rounded-lg hover:bg-gray-700 transition-colors group">
+          <div class="flex items-center space-x-4">
+            <span class="text-gray-400 w-6 text-center">{{ i + 1 }}</span>
+            <div class="w-10 h-10 bg-gray-700 rounded flex items-center justify-center">
+              <i class="pi pi-music text-gray-400"></i>
+            </div>
+            <div>
+              <p class="font-medium">{{ song.title }}</p>
+              <p class="text-sm text-gray-400">{{ song.artist }} • {{ song.album }}</p>
+            </div>
+          </div>
+          <div class="flex items-center space-x-3">
+            <span class="text-sm text-gray-400">{{ song.duration }}</span>
+            <button 
+              pButton 
+              pRipple 
+              class="p-button-rounded p-button-text opacity-0 group-hover:opacity-100"
+              icon="pi pi-play"
+              (click)="playSong(song)"
+            ></button>
+            <button 
+              pButton 
+              pRipple 
+              class="p-button-rounded p-button-text p-button-danger opacity-0 group-hover:opacity-100"
+              icon="pi pi-times"
+              (click)="removeFromPlaylist(selectedPlaylist.id, song.id)"
+            ></button>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="selectedPlaylist.songs.length === 0" class="text-center py-8 text-gray-400">
+        <i class="pi pi-music text-4xl mb-3"></i>
+        <p>No songs in this playlist yet</p>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="playlists.length === 0" class="text-center py-16">
+      <i class="pi pi-list text-6xl text-gray-600 mb-4"></i>
+      <h2 class="text-2xl font-bold mb-2">No playlists yet</h2>
+      <p class="text-gray-400 mb-6">Create your first playlist to start organizing your music</p>
+      <button 
+        pButton 
+        pRipple 
+        label="Create Playlist" 
+        icon="pi pi-plus"
+        class="p-button-primary"
+        (click)="openCreateModal()"
+      ></button>
+    </div>
+  </div>
+
+  <!-- Create Playlist Modal -->
+  <div *ngIf="showCreateModal" 
+       class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-gray-800 rounded-lg p-6 w-full max-w-md">
+      <h2 class="text-xl font-bold mb-4">Create New Playlist</h2>
+      
+      <div class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium mb-2">Playlist Name *</label>
+          <input 
+            type="text" 
+            [(ngModel)]="newPlaylistName"
+            placeholder="Enter playlist name"
+            class="w-full bg-gray-700 text-white px-4 py-2 rounded border border-gray-600 focus:outline-none focus:border-blue-500"
+            autofocus
+          />
+        </div>
+        
+        <div>
+          <label class="block text-sm font-medium mb-2">Description</label>
+          <textarea 
+            [(ngModel)]="newPlaylistDescription"
+            placeholder="What's this playlist about?"
+            rows="3"
+            class="w-full bg-gray-700 text-white px-4 py-2 rounded border border-gray-600 focus:outline-none focus:border-blue-500"
+          ></textarea>
+        </div>
+        
+        <div class="flex items-center">
+          <input 
+            type="checkbox" 
+            [(ngModel)]="newPlaylistIsPublic"
+            id="isPublic"
+            class="mr-2"
+          />
+          <label for="isPublic" class="text-sm">Make this playlist public</label>
+        </div>
+      </div>
+      
+      <div class="flex justify-end space-x-3 mt-6">
+        <button 
+          pButton 
+          pRipple 
+          class="p-button-outlined"
+          label="Cancel"
+          (click)="closeCreateModal()"
+        ></button>
+        <button 
+          pButton 
+          pRipple 
+          class="p-button-primary"
+          label="Create"
+          [disabled]="!newPlaylistName.trim()"
+          (click)="createPlaylist()"
+        ></button>
+      </div>
+    </div>
+  </div>
+</div>

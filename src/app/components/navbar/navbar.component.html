@@ -1,47 +1,117 @@
-<nav class="bg-white shadow-md border-b border-gray-200 fixed top-0 left-0 right-0 z-50">
-  <div class="px-4 sm:px-6 lg:px-8">
+<nav class="bg-white shadow-sm border-b border-gray-200 fixed top-0 left-0 right-0 z-50">
+  <div class="px-4">
     <div class="flex justify-between items-center h-16">
-      <!-- Left side - Logo and menu toggle -->
+      <!-- Left side - Logo -->
       <div class="flex items-center">
-        <button 
-          (click)="toggleSidebar()"
-          class="p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 lg:hidden"
-        >
-          <i class="pi pi-bars text-xl"></i>
-        </button>
-        <div class="flex-shrink-0 flex items-center ml-4 lg:ml-0">
-          <i class="pi pi-briefcase text-blue-600 text-2xl mr-3"></i>
-          <span class="text-xl font-bold text-gray-900">MyApp</span>
+        <div class="flex-shrink-0 flex items-center">
+          <div class="w-10 h-10 bg-red-600 rounded flex items-center justify-center mr-3">
+            <span class="text-white font-bold text-lg">G</span>
+          </div>
+          <span class="text-xl font-bold text-gray-900">gaana</span>
         </div>
       </div>
 
-      <!-- Center - Navigation menu (hidden on mobile) -->
+      <!-- Center - Navigation Menu -->
       <div class="hidden lg:block">
-        <div class="flex items-center space-x-4">
-          <a 
-            *ngFor="let item of items" 
-            [routerLink]="item.routerLink" 
-            class="flex items-center px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 transition-colors duration-200"
-          >
-            <i [class]="item.icon" class="mr-2"></i>
-            {{ item.label }}
-          </a>
+        <div class="flex items-center space-x-1">
+          <a href="#" class="px-4 py-2 text-sm font-medium text-red-600 border-b-2 border-red-600">All</a>
+          <a href="#" class="px-4 py-2 text-sm font-medium text-gray-700 hover:text-red-600">Trending Songs</a>
+          <a href="#" class="px-4 py-2 text-sm font-medium text-gray-700 hover:text-red-600">New Songs</a>
+          <a href="#" class="px-4 py-2 text-sm font-medium text-gray-700 hover:text-red-600">Old Songs</a>
+          
+          <!-- Moods & Genres Dropdown -->
+          <div class="relative group">
+            <button class="px-4 py-2 text-sm font-medium text-gray-700 hover:text-red-600 flex items-center">
+              Moods & Genres
+              <i class="pi pi-chevron-down ml-1 text-xs"></i>
+            </button>
+            <div class="absolute top-full left-0 mt-1 w-64 bg-white border border-gray-200 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+              <div class="grid grid-cols-3 gap-2 p-4">
+                <a href="#" class="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded">Shades of Love</a>
+                <a href="#" class="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded">Recap 2025</a>
+                <a href="#" class="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded">Dil Se Pancham</a>
+                <a href="#" class="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded">Party</a>
+                <a href="#" class="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded">Romance</a>
+                <a href="#" class="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded">90s & 2000s</a>
+                <a href="#" class="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded">Bhakti</a>
+                <a href="#" class="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded">Indie</a>
+                <a href="#" class="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded">EDM</a>
+              </div>
+            </div>
+          </div>
+          
+          <a href="#" class="px-4 py-2 text-sm font-medium text-gray-700 hover:text-red-600">Album</a>
+          
+          <!-- Top Playlist Dropdown -->
+          <div class="relative group">
+            <button class="px-4 py-2 text-sm font-medium text-gray-700 hover:text-red-600 flex items-center">
+              Top Playlist
+              <i class="pi pi-chevron-down ml-1 text-xs"></i>
+            </button>
+            <div class="absolute top-full left-0 mt-1 w-56 bg-white border border-gray-200 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+              <div class="p-2">
+                <a href="#" class="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded">Top Hindi Songs</a>
+                <a href="#" class="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded">Top Haryanvi Songs</a>
+                <a href="#" class="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded">Top Punjabi Songs</a>
+                <a href="#" class="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded">Top Tamil Songs</a>
+                <a href="#" class="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded">Top Bhakti Songs</a>
+                <a href="#" class="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded">90's Hindi Songs</a>
+                <a href="#" class="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded">Top English Songs</a>
+                <a href="#" class="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded">Top Bhojpuri Songs</a>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Top Artist Dropdown -->
+          <div class="relative group">
+            <button class="px-4 py-2 text-sm font-medium text-gray-700 hover:text-red-600 flex items-center">
+              Top Artist
+              <i class="pi pi-chevron-down ml-1 text-xs"></i>
+            </button>
+            <div class="absolute top-full left-0 mt-1 w-48 bg-white border border-gray-200 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+              <div class="p-2">
+                <a href="#" class="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded">Arijit Singh</a>
+                <a href="#" class="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded">Sonu Nigam</a>
+                <a href="#" class="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded">Sidhu Moose Wala</a>
+                <a href="#" class="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded">A. R. Rahman</a>
+                <a href="#" class="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded">Yo Yo Honey Singh</a>
+                <a href="#" class="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded">Badshah</a>
+              </div>
+            </div>
+          </div>
+          
+          <a href="#" class="px-4 py-2 text-sm font-medium text-gray-700 hover:text-red-600">Radio</a>
+          <a href="#" class="px-4 py-2 text-sm font-medium text-gray-700 hover:text-red-600">Podcast</a>
         </div>
       </div>
 
       <!-- Right side - User actions -->
       <div class="flex items-center space-x-3">
+        <!-- Search Bar -->
+        <div class="relative hidden md:block">
+          <input 
+            type="text" 
+            placeholder="Search Songs, Artists, Albums, Playlists"
+            class="w-64 bg-gray-100 text-gray-900 px-4 py-2 pl-10 pr-4 rounded-full border border-gray-300 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 text-sm"
+          />
+          <i class="pi pi-search absolute left-3 top-2.5 text-gray-400"></i>
+        </div>
+        
+        <a href="#" class="text-sm font-medium text-gray-700 hover:text-red-600">True Fans Charts</a>
+        <a href="#" class="text-sm font-medium text-gray-700 hover:text-red-600">My Music</a>
+        
         <button 
           pButton 
           pRipple 
-          class="p-button-outlined p-button-sm"
-          icon="pi pi-bell"
-          (click)="showNotifications()"
+          class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-full text-sm font-medium"
+          label="Get Gaana Plus"
+          (click)="upgradeToPro()"
         ></button>
+        
         <button 
           pButton 
           pRipple 
-          class="p-button-outlined p-button-sm"
+          class="p-button-text p-button-rounded text-gray-600 hover:text-gray-900"
           icon="pi pi-user"
           (click)="showUserProfile()"
         ></button>

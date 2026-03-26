@@ -1,0 +1,92 @@
+<div class="fixed bottom-0 left-0 right-0 bg-gray-900 text-white border-t border-gray-700 z-50">
+  <div class="px-4 py-3">
+    <!-- Progress Bar -->
+    <div class="mb-3">
+      <input 
+        type="range" 
+        min="0" 
+        [max]="duration" 
+        [value]="currentTime"
+        (input)="onSeek($event)"
+        class="w-full h-1 bg-gray-700 rounded-lg appearance-none cursor-pointer slider"
+        style="background: linear-gradient(to right, #3B82F6 0%, #3B82F6 ${(currentTime/duration)*100}%, #374151 ${(currentTime/duration)*100}%, #374151 100%);"
+      />
+    </div>
+
+    <div class="flex items-center justify-between">
+      <!-- Song Info -->
+      <div class="flex items-center space-x-3 w-1/3">
+        <div class="w-12 h-12 bg-gray-700 rounded flex items-center justify-center">
+          <i class="pi pi-music text-gray-400"></i>
+        </div>
+        <div class="min-w-0">
+          <p class="text-sm font-medium truncate">{{ currentSong?.title || 'No song playing' }}</p>
+          <p class="text-xs text-gray-400 truncate">{{ currentSong?.artist || 'Unknown artist' }}</p>
+        </div>
+      </div>
+
+      <!-- Player Controls -->
+      <div class="flex items-center justify-center space-x-4 w-1/3">
+        <button 
+          pButton 
+          pRipple 
+          class="p-button-text p-button-rounded text-gray-400 hover:text-white"
+          icon="pi pi-random"
+          [class.text-blue-500]="isShuffled"
+          (click)="toggleShuffle()"
+        ></button>
+        
+        <button 
+          pButton 
+          pRipple 
+          class="p-button-text p-button-rounded text-white hover:text-blue-400"
+          icon="pi pi-step-backward"
+          (click)="playPrevious()"
+        ></button>
+        
+        <button 
+          pButton 
+          pRipple 
+          class="p-button-rounded bg-blue-500 hover:bg-blue-600 text-white w-12 h-12"
+          [icon]="isPlaying ? 'pi pi-pause' : 'pi pi-play'"
+          (click)="togglePlayPause()"
+        ></button>
+        
+        <button 
+          pButton 
+          pRipple 
+          class="p-button-text p-button-rounded text-white hover:text-blue-400"
+          icon="pi pi-step-forward"
+          (click)="playNext()"
+        ></button>
+        
+        <button 
+          pButton 
+          pRipple 
+          class="p-button-text p-button-rounded text-gray-400 hover:text-white"
+          [icon]="getRepeatIcon()"
+          [class.text-blue-500]="repeatMode !== 'none'"
+          (click)="toggleRepeat()"
+        ></button>
+      </div>
+
+      <!-- Volume and Time -->
+      <div class="flex items-center justify-end space-x-3 w-1/3">
+        <span class="text-xs text-gray-400">{{ formatTime(currentTime) }} / {{ formatTime(duration) }}</span>
+        
+        <div class="flex items-center space-x-2">
+          <i class="pi pi-volume-up text-gray-400"></i>
+          <input 
+            type="range" 
+            min="0" 
+            max="100" 
+            [value]="volume"
+            (input)="onVolumeChange($event)"
+            class="w-20 h-1 bg-gray-700 rounded-lg appearance-none cursor-pointer"
+            style="background: linear-gradient(to right, #3B82F6 0%, #3B82F6 {{volume}}%, #374151 {{volume}}%, #374151 100%);"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
